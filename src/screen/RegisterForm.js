@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import InputText from '../component/InputText';
 import ButtonForm from '../component/ButtonForm';
 import CheckBoxToggle from '../component/CheckBoxToggle';
+import DateInput from '../component/DateInput';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 
@@ -29,6 +31,8 @@ const validate = (values) => {
 }
 
 const RegisterForm = (props) => {
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const { handleSubmit, createUser } = props;
     return (
         <View style={AppStyle.container}>
@@ -36,7 +40,7 @@ const RegisterForm = (props) => {
                 keyboardShouldPersistTaps="always"
                 showsVerticalScrollIndicator={false}
             >
-                <Field name='email' lable='Customer Name*' component={InputText} />
+                <Field name='name' lable='Customer Name*' component={InputText} />
                 <Field name='mobile' lable='Customer Mobile*' component={InputText} />
                 <Field name='pincode' lable='Model Purchased*' component={InputText} />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -44,7 +48,7 @@ const RegisterForm = (props) => {
                     <View style={{ width: 40 }} />
                     <Field name='state' lable='State*' component={InputText} />
                 </View>
-                <Field name='dateOfInvoice' lable='Date of Invoice*' component={InputText} />
+                <Field name='dateOfInvoice' lable='Date of Invoice*' component={DateInput} />
                 <Field name='batteryNo' lable='Battery No.*' component={InputText} />
                 <Field name='chassisNo' lable='Chassis No.*' component={InputText} />
                 <Field name='modelColor' lable='Model Color' component={InputText} />
@@ -52,7 +56,6 @@ const RegisterForm = (props) => {
                 <View style={{ height: 20 }} />
                 <ButtonForm text='SUBMIT' onPress={handleSubmit(onSubmit)} />
             </ScrollView>
-
         </View>
     )
 };
