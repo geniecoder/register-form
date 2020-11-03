@@ -28,6 +28,7 @@ const InputText = (props) => {
 
 const styles = StyleSheet.create({
     inputBox: {
+        height:40,
         alignContent:'stretch',
         alignSelf: 'stretch',
         backgroundColor: '#ececec',

@@ -6,7 +6,7 @@ import InputText from '../component/InputText';
 import ButtonForm from '../component/ButtonForm';
 import CheckBoxToggle from '../component/CheckBoxToggle';
 import DateInput from '../component/DateInput';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DropDown from '../component/DropDown';
 
 
 
@@ -20,19 +20,36 @@ const onSubmit = (value) => {
 
 const validate = (values) => {
     const errors = {};
-    if (!values.email) {
-        errors.email = 'email is required'
+    if (!values.name) {
+        errors.name = 'Name is required'
     }
-    if (!values.password) {
-        errors.password = "password is required"
+    if (!values.mobile) {
+        errors.mobile = "Mobile is required"
+    }
+    if (!values.modelPurchased) {
+        errors.modelPurchased = "Model is required"
+    }
+    if (!values.pincode) {
+        errors.pincode = "Pincode is required"
+    }
+    if (!values.state) {
+        errors.state = "State is required"
+    }
+    if (!values.dateOfInvoice) {
+        errors.dateOfInvoice = "Date is required"
+    }
+    if (!values.batteryNo) {
+        errors.batteryNo = "Battery No. is required"
+    }
+    if (!values.chassisNo) {
+        errors.chassisNo = "Chassis No. is required"
     }
 
     return errors;
 }
 
 const RegisterForm = (props) => {
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+ 
     const { handleSubmit, createUser } = props;
     return (
         <View style={AppStyle.container}>
@@ -40,18 +57,18 @@ const RegisterForm = (props) => {
                 keyboardShouldPersistTaps="always"
                 showsVerticalScrollIndicator={false}
             >
-                <Field name='name' lable='Customer Name*' component={InputText} />
-                <Field name='mobile' lable='Customer Mobile*' component={InputText} />
-                <Field name='pincode' lable='Model Purchased*' component={InputText} />
+                <Field name='name' lable='Customer Name*' maxLength={35} component={InputText} />
+                <Field name='mobile' lable='Customer Mobile*' keyboardType='numeric' maxLength={10}  component={InputText} />
+                <Field name='modelPurchased' lable='Model Purchased*' maxLength={45}  component={InputText} />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Field name='pincode' lable='Pin Code*' component={InputText} />
+                    <Field name='pincode' lable='Pin Code*' keyboardType='numeric' maxLength={12}  component={InputText} />
                     <View style={{ width: 40 }} />
                     <Field name='state' lable='State*' component={InputText} />
                 </View>
                 <Field name='dateOfInvoice' lable='Date of Invoice*' component={DateInput} />
-                <Field name='batteryNo' lable='Battery No.*' component={InputText} />
-                <Field name='chassisNo' lable='Chassis No.*' component={InputText} />
-                <Field name='modelColor' lable='Model Color' component={InputText} />
+                <Field name='batteryNo' lable='Battery No.*' maxLength={35}  component={InputText} />
+                <Field name='chassisNo' lable='Chassis No.*' maxLength={35}  component={InputText} />
+                <Field name='modelColor' lable='Model Color' component={DropDown} />
                 <Field name='isBajajFinance' lable='finance Through Bajaj' component={CheckBoxToggle} />
                 <View style={{ height: 20 }} />
                 <ButtonForm text='SUBMIT' onPress={handleSubmit(onSubmit)} />

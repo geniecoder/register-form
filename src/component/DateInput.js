@@ -7,6 +7,7 @@ import AppColors from '../values/AppColors';
 
 const DateInput = (props) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [selecteDate, setDate] = useState('Select Date');
     const { meta: { touched, error }, placeholder, secureTextEntry, keyboardType, maxLength, value, onSubmitEditing, input: { onChange, ...restInput }, lable } = props;
 
     const showDatePicker = () => {
@@ -18,8 +19,9 @@ const DateInput = (props) => {
     };
 
     const handleConfirm = (date) => {
-        console.warn("A date has been picked: ", date);
-        onChange(date);
+        const newDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        setDate(newDate);
+        onChange(newDate);
         hideDatePicker();
     };
     return (
@@ -27,7 +29,7 @@ const DateInput = (props) => {
             <Text style={styles.inputLable}>{lable}</Text>
             <TouchableWithoutFeedback
                 onPress={() => showDatePicker()}>
-                <Text style={styles.inputBox}>Select date</Text>
+                <Text style={styles.inputBox}>{selecteDate}</Text>
             </TouchableWithoutFeedback>
 
             <Text style={styles.errorText}>{(touched && error) && error}</Text>
@@ -43,6 +45,7 @@ const DateInput = (props) => {
 
 const styles = StyleSheet.create({
     inputBox: {
+        height:40,
         alignContent: 'stretch',
         alignSelf: 'stretch',
         backgroundColor: '#ececec',
