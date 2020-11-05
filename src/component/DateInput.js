@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AppColors from '../values/AppColors';
+import AppStyle from '../values/AppStyle';
 
 
 
@@ -26,13 +27,13 @@ const DateInput = (props) => {
     };
     return (
         <View>
-            <Text style={styles.inputLable}>{lable}</Text>
+            <Text style={AppStyle.inputLable}>{lable}</Text>
             <TouchableWithoutFeedback
                 onPress={() => showDatePicker()}>
                 <Text style={styles.inputBox}>{selecteDate}</Text>
             </TouchableWithoutFeedback>
 
-            <Text style={styles.errorText}>{(touched && error) && error}</Text>
+            <Text style={AppStyle.errorText}>{(touched && error) && error}</Text>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
@@ -67,7 +68,8 @@ const styles = StyleSheet.create({
         color: '#999',
         fontSize: 12,
         marginLeft: 16,
-        marginBottom: 8
+        marginBottom: 8,
+        alignSelf:'flex-end'
 
     }
 

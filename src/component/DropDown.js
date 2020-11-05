@@ -2,52 +2,36 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import AppColors from '../values/AppColors';
+import AppStyle from '../values/AppStyle';
 
 
 
 const DropDown = (props) => {
 
-    const { meta: { touched, error }, placeholder, secureTextEntry, keyboardType, maxLength, value, onSubmitEditing, input: { onChange, ...restInput }, lable } = props;
+    const { meta: { touched, error }, input: { onChange, ...restInput }, lable, colorList } = props;
 
-    const [pickedValue, setPickedValue] = useState('dfsdf');
-
-    const handlePicker = (value) => {
-
-        console.log(`picker value: ${value}`)
-        setPickedValue(value);
-        onChange(value);
-    };
+   
     return (
         <View>
-            <Text style={styles.inputLable}>{lable}</Text>
-
+            <Text style={AppStyle.inputLable}>{lable}</Text>
             <View style={styles.inputBox}>
                 <RNPickerSelect
-                    pickerProps={{ style: { height: 60, overflow: 'hidden' } }}
+                    pickerProps={{ style: { height: 60, overflow: 'hidden', color: '#666', } }}
                     onValueChange={(value, index) => console.log(onChange(value))}
                     value={props.regionId}
                     placeholder={{
                         label: 'Select State',
                         value: null,
                     }}
-                    items={[
-                        { label: 'Red', value: 'red' },
-                        { label: 'Blue', value: 'blue' },
-                        { label: 'White', value: 'white' },
-                        { label: 'Green', value: 'green' },
-                        { label: 'Black', value: 'black' },
-                        { label: 'Silver', value: 'sliver' },
-                    ]}
+                    items={colorList}
                 />
             </View>
-
-
-
-            <Text style={styles.errorText}>{(touched && error) && error}</Text>
-
+            <Text style={AppStyle.errorText}>{(touched && error) && error}</Text>
         </View>
     )
 };
+
+
 
 const styles = StyleSheet.create({
     inputBox: {
@@ -60,7 +44,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         borderColor: '#d6d6d6',
         borderWidth: 1,
-        paddingLeft: 16,
+        paddingLeft: 6,
         paddingVertical: 10,
         fontSize: 14,
         color: '#666',
@@ -75,7 +59,8 @@ const styles = StyleSheet.create({
         color: '#999',
         fontSize: 12,
         marginLeft: 16,
-        marginBottom: 8
+        marginBottom: 8,
+        alignSelf: 'flex-end'
 
     }
 

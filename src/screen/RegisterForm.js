@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import InputText from '../component/InputText';
@@ -8,15 +9,16 @@ import CheckBoxToggle from '../component/CheckBoxToggle';
 import DateInput from '../component/DateInput';
 import DropDown from '../component/DropDown';
 
+import { loadFormData, submitFormData } from '../actions/register.actions';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 
 import AppStyle from '../values/AppStyle';
 
 
-const onSubmit = (value) => {
-    console.log(value);
-}
+
 
 const validate = (values) => {
     const errors = {};
@@ -49,8 +51,25 @@ const validate = (values) => {
 }
 
 const RegisterForm = (props) => {
- 
-    const { handleSubmit, createUser } = props;
+
+
+
+    useEffect(() => {
+        dispatch(loadFormData());
+    }, [])
+
+    const formData = useSelector((state) => state.formData);
+
+    //console.log(`state: ${JSON.stringify(formData)}`)
+
+
+    const dispatch = useDispatch();
+    const onSubmit = (value) => {
+        console.log(value);
+        //dispatch(loadFormData());
+        dispatch(submitFormData(value));
+    }
+    const { handleSubmit } = props;
     return (
         <View style={AppStyle.container}>
             <ScrollView contentContainerStyle={AppStyle.scrollStyle}
@@ -58,17 +77,17 @@ const RegisterForm = (props) => {
                 showsVerticalScrollIndicator={false}
             >
                 <Field name='name' lable='Customer Name*' maxLength={35} component={InputText} />
-                <Field name='mobile' lable='Customer Mobile*' keyboardType='numeric' maxLength={10}  component={InputText} />
-                <Field name='modelPurchased' lable='Model Purchased*' maxLength={45}  component={InputText} />
+                <Field name='mobile' lable='Customer Mobile*' keyboardType='numeric' maxLength={10} component={InputText} />
+                <Field name='modelPurchased' lable='Model Purchased*' maxLength={45} component={InputText} />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Field name='pincode' lable='Pin Code*' keyboardType='numeric' maxLength={12}  component={InputText} />
+                    <Field name='pincode' lable='Pin Code*' keyboardType='numeric' maxLength={12} component={InputText} />
                     <View style={{ width: 40 }} />
                     <Field name='state' lable='State*' component={InputText} />
                 </View>
                 <Field name='dateOfInvoice' lable='Date of Invoice*' component={DateInput} />
-                <Field name='batteryNo' lable='Battery No.*' maxLength={35}  component={InputText} />
-                <Field name='chassisNo' lable='Chassis No.*' maxLength={35}  component={InputText} />
-                <Field name='modelColor' lable='Model Color' component={DropDown} />
+                <Field name='batteryNo' lable='Battery No.*' maxLength={35} component={InputText} />
+                <Field name='chassisNo' lable='Chassis No.*' maxLength={35} component={InputText} />
+                <Field name='modelColor' lable='Model Color' colorList={formData.colorList} component={DropDown} />
                 <Field name='isBajajFinance' lable='finance Through Bajaj' component={CheckBoxToggle} />
                 <View style={{ height: 20 }} />
                 <ButtonForm text='SUBMIT' onPress={handleSubmit(onSubmit)} />
@@ -77,7 +96,22 @@ const RegisterForm = (props) => {
     )
 };
 
-export default connect(null, null)(reduxForm({
-    form: 'login',
-    validate
-})(RegisterForm))
+
+mapStateToProps = (state) => ({
+    createUser: state.formData
+})
+
+mapDispatchToProps = (dispatch) => ({
+    dispatch
+});
+
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    reduxForm({
+        form: "login",
+        validate
+    })
+)(RegisterForm);
+
+

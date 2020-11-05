@@ -10,7 +10,7 @@ const CheckBoxToggle = (props) => {
     const [selected, setSelection] = useState(true);
     const { meta: {touched, error}, placeholder, secureTextEntry, keyboardType, maxLength, value, onChangeText, onSubmitEditing, input: {onChange, ...restInput}, lable} = props;
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems:'center' }}>
             <Text style={{color: AppColors.primary}}> {lable}</Text>
             <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity
@@ -18,7 +18,7 @@ const CheckBoxToggle = (props) => {
                         setSelection(true);
                         onChange(true);
                     }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 16 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 16, paddingVertical:4 }}>
                         <Image style={{ marginRight: 4, tintColor: AppColors.primary }} source={selected ? checkedImg : uncheckedImg} />
                         <Text>Yes</Text>
                     </View>
@@ -28,7 +28,7 @@ const CheckBoxToggle = (props) => {
                         setSelection(false);
                         onChange(false);
                     }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical:4 }}>
                         <Image style={{ marginRight: 4, tintColor: AppColors.primary }} source={selected ? uncheckedImg : checkedImg} />
                         <Text>No</Text>
                     </View>
