@@ -1,7 +1,7 @@
 import { takeEvery, call, put, all, takeLatest } from 'redux-saga/effects';
 import { LOAD_FORM_DATA, SUBMIT_FORM_DATA, SET_FORM_DATA } from '../actions/types';
-import { getFormData, fetchData } from '../service/FormServices';
-import { setFormData } from '../actions/register.actions';
+import { getFormData, submitFormData } from '../service/FormServices';
+import { setFormData, formDataSuccess } from '../actions/register.actions';
 
 
 function* fetchFormData() {
@@ -13,18 +13,13 @@ function* fetchFormData() {
     }
 }
 
-function* submitFormData() {
-    console.log(`submitFormData: from FormData.Saga`);
-    try {
-        const formData = yield call(fetchData);
-        yield put(setFormData(formData));
-    } catch (error) {
-
-    }
+function* saveFormData(action) {
+        const payload = yield call(submitFormData, action.payload);
+        yield put(formDataSuccess(payload));
 }
 
 export function* registerSaga() {
     yield all([takeEvery(LOAD_FORM_DATA, fetchFormData),
-    takeEvery(SUBMIT_FORM_DATA, submitFormData)
+    takeEvery(SUBMIT_FORM_DATA, saveFormData)
     ]);
 }

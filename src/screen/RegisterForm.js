@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import Dialog, { DialogContent } from 'react-native-popup-dialog';
 import InputText from '../component/InputText';
 import ButtonForm from '../component/ButtonForm';
 import CheckBoxToggle from '../component/CheckBoxToggle';
 import DateInput from '../component/DateInput';
 import DropDown from '../component/DropDown';
+import DialogView from '../component/DialogView';
 
-import { loadFormData, submitFormData } from '../actions/register.actions';
+import { loadFormData, submitFormData, hideDialog } from '../actions/register.actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -54,6 +56,8 @@ const RegisterForm = (props) => {
 
 
 
+    const [isVisible, setVisible] = useState(true);
+
     useEffect(() => {
         dispatch(loadFormData());
     }, [])
@@ -65,9 +69,12 @@ const RegisterForm = (props) => {
 
     const dispatch = useDispatch();
     const onSubmit = (value) => {
-        console.log(value);
-        //dispatch(loadFormData());
-        dispatch(submitFormData(value));
+        if (formData.isDataSubmiting) {
+            console.log(`Data is already submitting`);
+        } else {
+            dispatch(submitFormData(value));
+        }
+
     }
     const { handleSubmit } = props;
     return (
@@ -90,7 +97,18 @@ const RegisterForm = (props) => {
                 <Field name='modelColor' lable='Model Color' colorList={formData.colorList} component={DropDown} />
                 <Field name='isBajajFinance' lable='finance Through Bajaj' component={CheckBoxToggle} />
                 <View style={{ height: 20 }} />
-                <ButtonForm text='SUBMIT' onPress={handleSubmit(onSubmit)} />
+                <ButtonForm text='SUBMIT' isSubmitting={formData.isDataSubmiting} onPress={handleSubmit(onSubmit)} />
+                <Dialog
+                    visible={formData.dialogVisible}
+                    onTouchOutside={() => {
+                       // setVisible(false);
+                       dispatch(hideDialog());
+                    }}
+                >
+                    <DialogContent >
+                        <DialogView text='Thank You' text1='Data Submitted'/>
+                    </DialogContent>
+                </Dialog>
             </ScrollView>
         </View>
     )

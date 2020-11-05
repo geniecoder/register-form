@@ -17,17 +17,12 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers)
 
 
-//let store = createStore(persistedReducer, {}, applyMiddleware(sagaMiddleware));
-
 const store = createStore(
   persistedReducer,
   applyMiddleware(sagaMiddleware)
 )
 let persistor = persistStore(store)
-sagaMiddleware.run(registerSaga);
-//sagaMiddleware.run(rootSaga);
-
-//const action = type => store.dispatch({type})
+sagaMiddleware.run(registerSaga)
 
 export default () => {
 

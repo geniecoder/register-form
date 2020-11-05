@@ -13,3 +13,23 @@ export const GetApiRequest = (url) => {
     })
 }
 
+export const PostApiRequest = (url, body) => {
+    console.log(`url: ${url}`);
+    console.log(`body: ${body}`);
+    return Axios.post(
+        url,
+        body,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        }
+    ).then(response => {
+        if(response.status === 201){
+            console.log(`post response1: ${response.data}`)
+            return response.data;
+        }
+    })
+}
+

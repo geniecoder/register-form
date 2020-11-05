@@ -4,4 +4,5 @@ export const FORM_DATA_SUCCESS = 'FORM_DATA_SUCCESS';
 export const FORM_DATA_FAIL = 'FORM_DATA_FAIL';
 export const SUBMIT_SUCCESS = 'SUBMIT_SUCCESS';
 export const SUBMIT_FAIL = 'SUBMIT_FAIL';
-export const SET_FORM_DATA = 'SET_FORM_DATA'
+export const SET_FORM_DATA = 'SET_FORM_DATA';
+export const HIDE_DIALOG = 'HIDE_DIALOG';

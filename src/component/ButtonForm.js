@@ -6,7 +6,7 @@ const ButtonForm = (props) => (
     <TouchableOpacity
         style={styles.buttonForm}
         onPress={props.onPress}>
-        <Text style={styles.buttonText}>{props.text}</Text>
+        <Text style={styles.buttonText}>{props.isSubmitting ? 'loading...' : props.text}</Text>
     </TouchableOpacity>
 
 
